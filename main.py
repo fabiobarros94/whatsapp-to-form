@@ -2,6 +2,7 @@ import clipboard
 import logging
 import os
 import pyautogui
+import re
 import requests
 from datetime import datetime
 from dotenv import load_dotenv
@@ -381,8 +382,10 @@ def report_fillout(groups):
         multiple_tabs(2)
 
         for matricula in matriculas:
-            matri_form = str(matricula).replace("-", "")
-            clipboard.copy(matri_form)
+            numeros = re.findall(r'\d+', matricula)
+            numeros_str = ''.join(numeros)
+
+            clipboard.copy(numeros_str)
             
             with pyautogui.hold('ctrl'):
                 pyautogui.press('v')
